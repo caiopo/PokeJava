@@ -1,10 +1,19 @@
 package com.pokejava;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import org.json.*;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author Michael Cohen
@@ -22,6 +31,8 @@ public class Pokemon extends ModelClass {
 	private int Attack, CatchRate, Defense, EggCycles, Exp, Happiness, HP, SpAttack, SpDefense, Speed, Total;
 	private ArrayList<Integer> Abilities, Descriptions, Evolutions, EggGroups, Moves, Types;
 	private int EvolvesAt;
+
+	public ImageIcon Icon;
 
 	// Internal property
 	private ArrayList<String> LearnTypes; // For moves class
@@ -52,6 +63,7 @@ public class Pokemon extends ModelClass {
 		}
 
 		initializePokemon(data);
+
 	}
 
 	/**
@@ -229,7 +241,11 @@ public class Pokemon extends ModelClass {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 		}
+
+		Icon = loadPokeImage(ID);
+
 	}
 
 	/**
@@ -458,6 +474,7 @@ public class Pokemon extends ModelClass {
 	 * @return ArrayList<Type> TypesList: An ArrayList containing all of this
 	 *         Pokemon's types
 	 */
+
 	public ArrayList<Type> getTypes() {
 		ArrayList<Type> typeList = new ArrayList<Type>();
 
@@ -471,6 +488,13 @@ public class Pokemon extends ModelClass {
 		}
 
 		return typeList;
+	}
+
+	/**
+	 * @return ImageIcon the icon of this Pokemon
+	 */
+	public ImageIcon getIcon() {
+		return Icon;
 	}
 
 	/**
@@ -531,6 +555,37 @@ public class Pokemon extends ModelClass {
 			return false;
 		else
 			return true;
+	}
+
+	public boolean hasIcon() {
+		if (Icon == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public static ImageIcon loadPokeImage(int id) {
+
+		String url = new Sprite(id + 1).getImage();
+
+		return loadImageFromURL("http://pokeapi.co" + url);
+
+	}
+
+	public static ImageIcon loadImageFromURL(String url) {
+
+		BufferedImage temp = null;
+
+		try {
+			temp = ImageIO.read(new URL(url));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return new ImageIcon(temp);
 	}
 
 }
