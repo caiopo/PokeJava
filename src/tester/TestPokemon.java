@@ -92,7 +92,7 @@ public class TestPokemon {
 
 	
 	private static boolean isAllPokemonBasics(){
-		for (int id=1; id <=718; id++) {
+		for (int id=190; id <=718; id++) {
 			Pokemon p = new Pokemon(id);
 			String n = p.getEVYield();
 			n = p.getGrowthRate();
