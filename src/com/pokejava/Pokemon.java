@@ -32,7 +32,7 @@ public class Pokemon extends ModelClass {
 	private ArrayList<Integer> Abilities, Descriptions, Evolutions, EggGroups, Moves, Types;
 	private int EvolvesAt;
 
-	public ImageIcon Icon;
+	private ImageIcon Icon;
 
 	// Internal property
 	private ArrayList<String> LearnTypes; // For moves class
